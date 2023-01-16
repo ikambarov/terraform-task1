@@ -11,9 +11,13 @@ resource "aws_instance" "web1" {
               chkconfig httpd on
               echo "Hello, world" > /var/www/html/index.html
               EOF
-  tags = {
-    Name = "web1"
-  }
+
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "web1"
+    },
+  )
 }
 
 
@@ -31,9 +35,13 @@ resource "aws_instance" "web2" {
               chkconfig httpd on
               echo "Hello, world" > /var/www/html/index.html
               EOF
-  tags = {
-    Name = "web2"
-  }
+
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "web2"
+    },
+  )
 }
 
 resource "aws_instance" "web3" {
@@ -49,7 +57,11 @@ resource "aws_instance" "web3" {
               chkconfig httpd on
               echo "Hello, world" > /var/www/html/index.html
               EOF
-  tags = {
-    Name = "web3"
-  }
+
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "web3"
+    },
+  )
 }
