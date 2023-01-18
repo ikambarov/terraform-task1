@@ -20,9 +20,12 @@ resource "aws_security_group" "allow_ssh" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
-  tags = {
-    Name = "allow-ssh"
-  }
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "allow-ssh"
+    },
+  )
 }
 
 resource "aws_security_group" "allow_http" {
@@ -55,7 +58,10 @@ resource "aws_security_group" "allow_http" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
-  tags = {
-    Name = "allow-http"
-  }
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "allow-http"
+    },
+  )
 }

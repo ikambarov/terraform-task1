@@ -1,20 +1,26 @@
 resource "aws_vpc" "task_vpc" {
   cidr_block = "10.0.0.0/16"
 
-  tags = {
-    Name = "Task-VPC"
-  }
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "Task-VPC"
+    },
+  )
 }
 
 resource "aws_internet_gateway" "task_ig" {
   vpc_id = aws_vpc.task_vpc.id
 
-  tags = {
-    Name = "Task-IG"
-  }
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "Task-IG"
+    },
+  )
 }
 
-resource "aws_route" "r" {
+resource "aws_route" "route" {
   route_table_id         = aws_vpc.task_vpc.default_route_table_id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_internet_gateway.task_ig.id
@@ -27,9 +33,12 @@ resource "aws_subnet" "subnet_us_east_1a" {
   availability_zone       = "us-east-1a"
   map_public_ip_on_launch = true
 
-  tags = {
-    Name = "subnet-us-east-1a"
-  }
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "subnet-us-east-1a"
+    },
+  )
 }
 
 resource "aws_subnet" "subnet_us_east_1b" {
@@ -39,9 +48,12 @@ resource "aws_subnet" "subnet_us_east_1b" {
   availability_zone       = "us-east-1b"
   map_public_ip_on_launch = true
 
-  tags = {
-    Name = "subnet-us-east-1b"
-  }
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "subnet-us-east-1b"
+    },
+  )
 }
 
 resource "aws_subnet" "subnet_us_east_1c" {
@@ -51,7 +63,10 @@ resource "aws_subnet" "subnet_us_east_1c" {
   availability_zone       = "us-east-1c"
   map_public_ip_on_launch = true
 
-  tags = {
-    Name = "subnet-us-east-1c"
-  }
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "subnet-us-east-1c"
+    },
+  )
 }

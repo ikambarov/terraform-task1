@@ -5,9 +5,12 @@ resource "aws_lb" "task_alb" {
   security_groups    = [aws_security_group.allow_http.id]
   subnets            = [aws_subnet.subnet_us_east_1a.id, aws_subnet.subnet_us_east_1b.id, aws_subnet.subnet_us_east_1c.id]
 
-  tags = {
-    Name = "Task-ALB"
-  }
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "Task-ALB"
+    },
+  )
 }
 
 resource "aws_lb_target_group" "task_tg" {
@@ -15,6 +18,13 @@ resource "aws_lb_target_group" "task_tg" {
   port     = 80
   protocol = "HTTP"
   vpc_id   = aws_vpc.task_vpc.id
+
+  tags = merge(
+    var.common_tags,
+    {
+      Name = "TaskTG"
+    },
+  )
 }
 
 resource "aws_lb_target_group_attachment" "web1_tg" {
